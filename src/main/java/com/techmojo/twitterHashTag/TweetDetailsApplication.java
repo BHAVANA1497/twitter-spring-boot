@@ -6,10 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.techmojo")
-public class TwitterHashTagApplication {
+public class TweetDetailsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TwitterHashTagApplication.class, args);
+		SpringApplication.run(TweetDetailsApplication.class, args);
 	}
 
 }

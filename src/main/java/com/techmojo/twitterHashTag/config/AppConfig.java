@@ -18,8 +18,8 @@ public class AppConfig {
                 .select()
                 .apis( RequestHandlerSelectors.any()) .build()
                 .apiInfo(new ApiInfoBuilder()
-                        .title("Parcel Enquiry Service")
-                        .description("Parcel Enquiry Service").build()
+                        .title("Twitter HashTag Application")
+                        .description("Tweet Details service").build()
                 )
                 .enable(true);
     }

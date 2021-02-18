@@ -3,9 +3,7 @@ package com.techmojo.twitterHashTag.service;
 import com.techmojo.twitterHashTag.model.TweetDetails;
 import com.techmojo.twitterHashTag.repository.TweetDetailsRepository;
 import com.techmojo.twitterHashTag.rest.json.TweetPostRequest;
-import com.techmojo.twitterHashTag.rest.json.TweetPostResponse;
-import com.techmojo.twitterHashTag.service.impl.TwitterServiceImpl;
-import org.junit.jupiter.api.Assertions;
+import com.techmojo.twitterHashTag.service.impl.TweetDetailsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,14 +16,14 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-public class TwitterServiceImplTest {
+public class TweetDetailsServiceImplTest {
 
 
     @Mock
     TweetDetailsRepository tweetDetailsRepository;
 
     @InjectMocks
-    TwitterServiceImpl twitterService;
+    TweetDetailsServiceImpl twitterService;
 
     @BeforeEach
     void setUp(){
@@ -63,9 +61,6 @@ public class TwitterServiceImplTest {
 //                () -> Assertions.assertEquals("#new tweet", result.getTweet())
 //        );
     }
-
-
-
 
 
 }

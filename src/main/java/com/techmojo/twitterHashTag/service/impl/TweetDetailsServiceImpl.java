@@ -7,7 +7,7 @@ import com.techmojo.twitterHashTag.rest.exception.TwitterException;
 import com.techmojo.twitterHashTag.rest.json.TweetCount;
 import com.techmojo.twitterHashTag.rest.json.TweetPostRequest;
 import com.techmojo.twitterHashTag.rest.json.TweetPostResponse;
-import com.techmojo.twitterHashTag.service.TwitterService;
+import com.techmojo.twitterHashTag.service.TweetDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 @Service
 @Slf4j
 @Transactional
-public class TwitterServiceImpl implements TwitterService {
+public class TweetDetailsServiceImpl implements TweetDetailsService {
 
     private final ZoneId zoneId = ZoneId.systemDefault();
 
@@ -32,16 +32,16 @@ public class TwitterServiceImpl implements TwitterService {
 
 
     @Autowired
-    public TwitterServiceImpl(TweetDetailsRepository tweetDetailsRepository){
+    public TweetDetailsServiceImpl(TweetDetailsRepository tweetDetailsRepository){
         this.tweetDetailsRepository = tweetDetailsRepository;
     }
-	
+
    /* *
     * This Method allows to insert tweets inside Database
     *
     * TweetId is the primary Auto generated key and
     *
-    * createTime is the time when tweet is inserted in Database
+    * createTime is the time when tweet is inserted into Database
     * */
     @Override
     public TweetPostResponse insertTweet(TweetPostRequest tweetPostRequest){
@@ -70,20 +70,23 @@ public class TwitterServiceImpl implements TwitterService {
 
         return tweetPostResponse;
     }
-	
-	 /* *
-     * This Method retrieves all the tweets from the Database
+
+    /* *
+     *  This Method retrieves all the tweets from the Database
      * */
     @Override
     public List<String> getTopTenHashTags() {
 
         List<TweetDetails> tweets = tweetDetailsRepository.findAll();
 
-        return topTenHashTags( tweets);
+        return topTenHashTags(tweets);
 
     }
 
-    // This Method Get top 10 most used Hashtags
+     /* *
+     *  This Method is to get top 10 most used Hashtags from the
+     * tweets retrieved from Database
+     * */
     public List<String> topTenHashTags( List<TweetDetails> tweets){
 
         Pattern pattern = Pattern.compile("(#\\w+)");
@@ -113,15 +116,16 @@ public class TwitterServiceImpl implements TwitterService {
             tweetCounts.add(t);
         }
 
-        log.info("before {}", tweetCounts);
-        //Use Comparator to sort the objects in descending order inside list based on the frequency
+        log.info("before sorting tweets frequency{}", tweetCounts);
+
+        //sort the objects inside List in descending order based on the frequency
         tweetCounts.sort((a, b) -> {
             if (a.getTag().equals(b.getTag()))
                 return a.getFrequency() - b.getFrequency();
             else
                 return b.getFrequency() - a.getFrequency();
         });
-        log.info("after {}", tweetCounts);
+        log.info("after sorting tweets frequency {}", tweetCounts);
 
         //Returning Top 10 results from the sorted List
         int counter = 1;
@@ -132,6 +136,7 @@ public class TwitterServiceImpl implements TwitterService {
             counter++;
 
         }
+        log.info("Top 10 Hashtags {}", topResult);
         return topResult;
 
     }

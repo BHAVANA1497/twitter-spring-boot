@@ -2,23 +2,22 @@ package com.techmojo.twitterHashTag.rest.controller;
 
 
 import com.techmojo.twitterHashTag.rest.json.*;
-import com.techmojo.twitterHashTag.service.TwitterService;
+import com.techmojo.twitterHashTag.service.TweetDetailsService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @Slf4j
-public class TwitterHashTagController {
+public class TweetDetailsController {
 
-    private final TwitterService twitterService;
+    private final TweetDetailsService tweetDetailsService;
 
     @Autowired
-    public TwitterHashTagController(TwitterService twitterService) {this.twitterService = twitterService;}
+    public TweetDetailsController(TweetDetailsService tweetDetailsService) {this.tweetDetailsService = tweetDetailsService;}
 
     @PostMapping(value = "/add/tweet")
     @ApiOperation(value = "Insert Tweet", httpMethod = "POST", consumes = "application/json")
@@ -27,7 +26,7 @@ public class TwitterHashTagController {
         TweetPostResponse tweetPostResponse;
         RestResponse<TweetPostResponse> restResponse = new RestResponse<>();
         try{
-            tweetPostResponse = twitterService.insertTweet(request);
+            tweetPostResponse = tweetDetailsService.insertTweet(request);
         }
         catch (Exception e){
             log.error(e.getMessage());
@@ -45,7 +44,7 @@ public class TwitterHashTagController {
     public RestResponse<List<String>> findTopHashTags() {
 
         RestResponse<List<String>> response = new RestResponse<>();
-        List<String> hashTags = twitterService.getTopTenHashTags();
+        List<String> hashTags = tweetDetailsService.getTopTenHashTags();
         response.setData(hashTags);
         return response;
     }

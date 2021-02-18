@@ -6,7 +6,7 @@ import com.techmojo.twitterHashTag.rest.json.TweetPostResponse;
 
 import java.util.List;
 
-public interface TwitterService {
+public interface TweetDetailsService {
 
     TweetPostResponse insertTweet(TweetPostRequest tweetPostRequest);
 
